@@ -7,6 +7,7 @@
   </head>
   <body>
     <div id="map" class="map"></div>
+    <button id="geolocate">locate your position</button>
     <button id="rotate-left" title="Rotate clockwise">↻</button>
     <button id="rotate-right" title="Rotate counterclockwise">↺</button>
     <button id="rotate-around-rome">Rotate around Rome</button>
@@ -75,6 +76,18 @@
         }),
         view: view
       });
+
+      var geolocateButton = document.getElementById('geolocate');
+      geolocateButton.addEventListener('click', function() {
+        if (navigator.geolocation) {
+           navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+          Alert("geolocation is not supported by your browser.");
+        }
+      });
+      function showPosition(position){
+          
+      }
 
       var rotateLeft = document.getElementById('rotate-left');
       rotateLeft.addEventListener('click', function() {
