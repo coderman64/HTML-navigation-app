@@ -88,7 +88,7 @@
       });
       map.addLayer(vector);
 
-      var geoPoint = new ol.geom.Point();
+      var geoPoint = new ol.geom.Point(istanbul);
       var geoFeature= new ol.Feature(geoPoint);
       geoFeature.setStyle(new ol.style.Style({
         image: new ol.style.Circle({
