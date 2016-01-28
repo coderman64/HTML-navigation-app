@@ -88,6 +88,21 @@
       });
       map.addLayer(vector);
 
+      var geoPoint = new ol.geom.Point();
+      var geoFeature= new ol.Feature(geoPoint);
+      geoFeature.setStyle(new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: 9,
+          fill: new ol.style.Fill({
+            color: '#3399CC'
+          }),
+          stroke: new ol.style.Stroke({
+            color: '#fff',
+            width: 2
+          })
+        })
+      }));
+      source.addFeature(geoFeature);
 
       var geolocateButton = document.getElementById('geolocate');
       geolocateButton.addEventListener('click', function() {
@@ -100,24 +115,9 @@
       function showPosition(position){
         var location12 = ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]);
         var duration = 2000;
-        var source = new ol.source.Vector({
-          wrapX: false
-        });
-        var geom = new ol.geom.Point(location12);
-        var feature = new ol.Feature(geom);
-        feature.setStyle(new ol.style.Style({
-        image: new ol.style.Circle({
-          radius: 9,
-          fill: new ol.style.Fill({
-            color: '#3399CC'
-          }),
-          stroke: new ol.style.Stroke({
-            color: '#fff',
-            width: 2
-          })
-        })
-      }));
-        source.addFeature(feature);
+        
+        geoPoint.setCoordinates(location12);
+        
         var start = +new Date();
         var pan = ol.animation.pan({
           duration: duration,
