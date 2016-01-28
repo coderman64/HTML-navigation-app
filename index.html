@@ -100,6 +100,9 @@
       function showPosition(position){
         var location12 = ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]);
         var duration = 2000;
+        var source = new ol.source.Vector({
+          wrapX: false
+        });
         var geom = new ol.geom.Point(location12);
         var feature = new ol.Feature(geom);
         feature.setStyle(new ol.style.Style({
