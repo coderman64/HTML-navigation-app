@@ -79,6 +79,15 @@
         }),
         view: view
       });
+      
+      var source = new ol.source.Vector({
+        wrapX: false
+      });
+      var vector = new ol.layer.Vector({
+        source: source
+      });
+      map.addLayer(vector);
+
 
       var geolocateButton = document.getElementById('geolocate');
       geolocateButton.addEventListener('click', function() {
@@ -102,6 +111,9 @@
           resolution: 4 * view.getResolution(),
           start: start
         });
+        var geom = new ol.geom.Point(ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]));
+        var feature = new ol.Feature(geom);
+        source.addFeature(feature);
         map.beforeRender(pan, bounce);
         view.setCenter(location12);
       }
