@@ -10,6 +10,9 @@
   <body>
     <input type="text" id="Searchbar"></input>
     <button id="geolocate">locate your position</button>
+    <button id="istanbul">go to Istanbul</button>
+    <button id="rome">go to Rome</button>
+    <button id="london">go to London</button>
     <div id="map" class="map"></div>
     <!--<button id="rotate-left" title="Rotate clockwise">↻</button>
     <button id="rotate-right" title="Rotate counterclockwise">↺</button>
@@ -132,6 +135,32 @@
         map.beforeRender(pan, bounce);
         view.setCenter(location12);
       }
+      
+      var istanbulButton = documant.getElementById("istanbul");
+      istanbulButton.addEventListener('click',{
+      var duration = 2000;
+        
+        geoPoint.setCoordinates(istanbul);
+        
+        var start = +new Date();
+        var pan = ol.animation.pan({
+          duration: duration,
+          source: /** @type {ol.Coordinate} */ (view.getCenter()),
+          start: start
+        });
+        var bounce = ol.animation.bounce({
+          duration: duration,
+          resolution: 4 * view.getResolution(),
+          start: start
+        });
+        map.beforeRender(pan, bounce);
+        view.setCenter(location12);
+      });
+      
+
+
+
+      //unused example stuff
 
       var rotateLeft = document.getElementById('rotate-left');
       rotateLeft.addEventListener('click', function() {
