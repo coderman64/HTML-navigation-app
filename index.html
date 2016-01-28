@@ -98,8 +98,11 @@
         }
       });
       function showPosition(position){
-          var location12 = ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]);
-          var duration = 2000;
+        var location12 = ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]);
+        var duration = 2000;
+        var geom = new ol.geom.Point(location12);
+        var feature = new ol.Feature(geom);
+        source.addFeature(feature);
         var start = +new Date();
         var pan = ol.animation.pan({
           duration: duration,
@@ -111,9 +114,6 @@
           resolution: 4 * view.getResolution(),
           start: start
         });
-        var geom = new ol.geom.Point(ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]));
-        var feature = new ol.Feature(geom);
-        source.addFeature(feature);
         map.beforeRender(pan, bounce);
         view.setCenter(location12);
       }
