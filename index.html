@@ -60,11 +60,11 @@
       var bern = ol.proj.fromLonLat([7.4458, 46.95]);
       var madrid = ol.proj.fromLonLat([-3.683333, 40.4]);
 
-      var xmlhttp = new XMLHttpRequest();
       var nomUrl = "http://nominatim.openstreetmap.org/search/<query>?format=json";
 
       var searchName = function(name){
-        xmlhttp.open("GET", url.replace("<query>",name), true);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", nomUrl.replace("<query>",name), true);
         xmlhttp.send();
         while(xmlhttp.readyState != 4 && xmlhttp.status != 200){}
         var answer = JSON.parse(xmlhttp.responseText);
