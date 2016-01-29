@@ -140,9 +140,9 @@
       var searchButton = document.getElementById("search");
       var searchBar = document.getElementById("searchbar");
       searchButton.addEventListener('click', function(){
-         searchButton.innerHTML = "locating..."+str(searchBar.value);
+         searchButton.innerHTML = "locating..."+searchBar.value.toString();
          var place = searchName(searchBar.value);
-         searchButton.innerHTML = "search";
+         searchButton.innerHTML = "searched";
          geoPoint.setCoordinates(place);
          fly(place);
       });
