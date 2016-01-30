@@ -66,14 +66,8 @@
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("GET", nomUrl.replace("<query>",name), true);
         xmlhttp.send();
-        vsr answer = null
-        while(answer == null){
-          if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-            answer = JSON.parse(xmlhttp.responseText);
-          }else{
-            answer = null;
-          }
-        }
+        while(xmlhttp.readyState != 4 || xmlhttp.status != 200){}
+        var answer = JSON.parse(xmlhttp.responseText);
         return ol.proj.fromLonLat([answer[0].lon,answer[1].lat]);
       };
 
