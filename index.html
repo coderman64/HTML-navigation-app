@@ -8,11 +8,10 @@
     </style>
   </head>
   <body>
-    <input type="text" id="Searchbar"></input>
+    <input type="text" id="Searchbar" size = "90"></input>
     <button id="search">search</input>
     <button id="geolocate">locate your position</button>
     <button id="istanbul">go to Istanbul</button>
-    <button id="rome">go to Rome</button>
     <button id="london">go to London</button>
     <div id="map" class="map"></div>
     <!--<button id="rotate-left" title="Rotate clockwise">↻</button>
@@ -60,15 +59,12 @@
       var bern = ol.proj.fromLonLat([7.4458, 46.95]);
       var madrid = ol.proj.fromLonLat([-3.683333, 40.4]);
 
+	  var xmlhttp = new XMLHttpRequest();
       var nomUrl = "http://nominatim.openstreetmap.org/search/<query>?format=json";
 
       var searchName = function(name){
-        var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("GET", nomUrl.replace("<query>",name), true);
         xmlhttp.send();
-        while(xmlhttp.readyState != 4 && xmlhttp.status != 200){}
-        var answer = JSON.parse(xmlhttp.responseText);
-        return ol.proj.fromLonLat([answer[0].lon,answer[1].lat]);
       };
 
       var view = new ol.View({
@@ -138,14 +134,27 @@
       source.addFeature(geoFeature);
 
       var searchButton = document.getElementById("search");
-      var searchBar = document.getElementById("searchbar");
+      var searchBar = document.getElementById("Searchbar");
       searchButton.addEventListener('click', function(){
-         searchButton.innerHTML = "locating..."+searchBar.value.toString();
+         searchButton.innerHTML = "locating...";
          var place = searchName(searchBar.value);
-         searchButton.innerHTML = "searched";
-         geoPoint.setCoordinates(place);
-         fly(place);
       });
+	  
+	  var searchGo = function(pos){
+		//searchButton.innerHTML = "done";
+		geoPoint.setCoordinates(pos);
+        fly(pos);
+	  };
+	  
+	  xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			searchButton.innerHTML = "response gathered...";
+			var answer = JSON.parse(xmlhttp.responseText);
+			searchButton.innerHTML = "done:"+answer[0].lat+","+answer[0].lon;
+			var loc = ol.proj.fromLonLat([Number(answer[0].lon),Number(answer[0].lat.valueOf())]);
+			searchGo(loc);
+		}
+	  };
 
 
       var geolocateButton = document.getElementById('geolocate');
