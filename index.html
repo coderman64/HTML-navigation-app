@@ -152,6 +152,7 @@
          searchButton.innerHTML = "locating";
          var place = searchName(searchBar.value);
       });
+          searchButton.offsetLeft = searchBar.offsetWidth+100;
 	  map.addControl(new ol.control.Control({element:searchBar}));
 	  map.addControl(new ol.control.Control({element:searchButton}));
 	  map.addControl(new ol.control.Control({element:geolocateButton}));
